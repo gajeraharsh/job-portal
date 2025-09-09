@@ -12,6 +12,10 @@ import SocialShare from '@/components/SocialShare';
 
 interface Params { slug: string }
 
+export function generateStaticParams() {
+  return blogPosts.map((p) => ({ slug: p.slug }));
+}
+
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const post = blogPosts.find((p) => p.slug === params.slug);
   if (!post) return { title: 'Post not found' };
