@@ -47,7 +47,8 @@ export default function JobSheet({ job, onClose }: JobSheetProps) {
 
   return (
     <Sheet open onOpenChange={onClose}>
-      <SheetContent side="right" className="w-full sm:max-w-xl md:max-w-2xl lg:max-w-3xl overflow-y-auto">
+      <SheetContent side="right" className="w-full sm:max-w-xl md:max-w-2xl lg:max-w-3xl overflow-hidden">
+        <div className="overflow-y-auto max-h-[calc(100vh-4rem)]">
         <SheetHeader>
           <div className="flex items-start justify-between">
             <div className="flex-1">
@@ -218,6 +219,7 @@ export default function JobSheet({ job, onClose }: JobSheetProps) {
               </CardContent>
             </Card>
           </div>
+        </div>
         </div>
       </SheetContent>
     </Sheet>
