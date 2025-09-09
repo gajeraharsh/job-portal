@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Calendar, User } from 'lucide-react';
 import AdBanner from '@/components/AdBanner';
 import SocialShare from '@/components/SocialShare';
+import { formatDate } from '@/lib/utils';
 
 interface Params { slug: string }
 
@@ -51,7 +52,7 @@ export default function BlogPostPage({ params }: { params: Params }) {
           <div className="flex items-center gap-3 text-sm text-gray-600 mb-3">
             <Badge variant="secondary">{post.category}</Badge>
             <span className="flex items-center gap-1"><User className="w-4 h-4" />{post.author}</span>
-            <span className="flex items-center gap-1"><Calendar className="w-4 h-4" />{new Date(post.date).toLocaleDateString()}</span>
+            <span className="flex items-center gap-1"><Calendar className="w-4 h-4" />{formatDate(post.date)}</span>
             {post.readTime ? <span>{post.readTime} min read</span> : null}
           </div>
           <h1 className="text-3xl md:text-5xl font-bold text-gray-900 leading-tight">{post.title}</h1>
@@ -107,7 +108,7 @@ export default function BlogPostPage({ params }: { params: Params }) {
                     <img src={rel.image} alt={rel.title} className="w-24 h-16 object-cover rounded" />
                     <div>
                       <p className="font-medium hover:text-blue-600">{rel.title}</p>
-                      <p className="text-xs text-gray-500">{new Date(rel.date).toLocaleDateString()}</p>
+                      <p className="text-xs text-gray-500">{formatDate(rel.date)}</p>
                     </div>
                   </div>
                 </Link>
