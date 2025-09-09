@@ -93,7 +93,7 @@ export default function BlogPage() {
                   <CardContent className="pt-0">
                     <div className="flex items-center justify-between text-sm text-gray-500">
                       <span className="flex items-center gap-1"><User className="w-4 h-4" />{p.author}</span>
-                      <span className="flex items-center gap-1"><Calendar className="w-4 h-4" />{new Date(p.date).toLocaleDateString()}</span>
+                      <span className="flex items-center gap-1"><Calendar className="w-4 h-4" />{require('@/lib/utils').formatDate(p.date)}</span>
                     </div>
                     <div className="mt-4 flex justify-end">
                       <Button variant="link" className="text-blue-600 p-0">Read More <ChevronRight className="w-4 h-4 ml-1" /></Button>
@@ -129,7 +129,7 @@ export default function BlogPage() {
                     <img src={p.image} alt={p.title} className="w-20 h-16 object-cover rounded" />
                     <div>
                       <p className="font-medium group-hover:text-blue-600 transition-colors leading-snug">{p.title}</p>
-                      <p className="text-xs text-gray-500">{new Date(p.date).toLocaleDateString()}</p>
+                      <p className="text-xs text-gray-500">{require('@/lib/utils').formatDate(p.date)}</p>
                     </div>
                   </div>
                 </Link>
