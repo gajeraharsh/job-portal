@@ -31,3 +31,28 @@ export interface Category {
   icon: any;
   count: number;
 }
+
+export interface BlogPost {
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: Array<
+    | { type: 'p'; text: string }
+    | { type: 'h2'; text: string }
+    | { type: 'h3'; text: string }
+    | { type: 'ul'; items: string[] }
+  >;
+  category:
+    | 'Career Advice'
+    | 'Resume & Cover Letter Tips'
+    | 'Interview Preparation'
+    | 'Job Market Trends'
+    | 'Remote Work & Freelancing'
+    | 'Company Insights / Culture';
+  author: string;
+  date: string;
+  image: string;
+  tags?: string[];
+  popular?: boolean;
+  readTime?: number;
+}
