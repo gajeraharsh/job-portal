@@ -1,7 +1,3 @@
-'use client';
-
-import { useMemo, useState } from 'react';
-import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { Building2, MapPin, Users, ExternalLink, ChevronLeft } from 'lucide-react';
 import Header from '@/components/Header';
@@ -10,20 +6,15 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import SocialShare from '@/components/SocialShare';
-import JobModal from '@/components/JobModal';
 import { companies, jobs } from '@/lib/data';
-import type { Job } from '@/lib/types';
 
 export function generateStaticParams() {
   return companies.map((c) => ({ id: c.id }));
 }
 
-export default function CompanyProfilePage() {
-  const params = useParams<{ id: string }>();
-  const [selectedJob, setSelectedJob] = useState<Job | null>(null);
-
-  const company = useMemo(() => companies.find((c) => c.id === params.id), [params.id]);
-  const companyJobs = useMemo(() => (company ? jobs.filter((j) => j.company === company.name) : []), [company]);
+export default function CompanyProfilePage({ params }: { params: { id: string } }) {
+  const company = companies.find((c) => c.id === params.id);
+  const companyJobs = company ? jobs.filter((j) => j.company === company.name) : [];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -145,9 +136,6 @@ export default function CompanyProfilePage() {
 
       <Footer />
 
-      {selectedJob && (
-        <JobModal job={selectedJob} onClose={() => setSelectedJob(null)} />
-      )}
     </div>
   );
 }
