@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Search, Building2, ExternalLink, MapPin, Users } from 'lucide-react';
+import Link from 'next/link';
+import { Search, Building2, ExternalLink, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -90,11 +91,15 @@ export default function CompaniesPage() {
                 </div>
                 
                 <div className="flex gap-2">
-                  <Button className="flex-1">
-                    View Jobs
+                  <Button asChild className="flex-1">
+                    <Link href={`/companies/${company.id}`}>
+                      View Jobs
+                    </Link>
                   </Button>
-                  <Button variant="outline" size="sm">
-                    <ExternalLink className="w-4 h-4" />
+                  <Button asChild variant="outline" size="sm">
+                    <a href={company.website} target="_blank" rel="noopener noreferrer" aria-label={`Open ${company.name} website`}>
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
                   </Button>
                 </div>
               </CardContent>
