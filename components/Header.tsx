@@ -11,6 +11,7 @@ export default function Header() {
   const navigationItems = [
     { name: 'Jobs', href: '/jobs' },
     { name: 'Companies', href: '/companies' },
+    { name: 'Blog', href: '/blog' },
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
   ];
