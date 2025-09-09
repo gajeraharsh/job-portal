@@ -79,7 +79,8 @@ export const jobs: Job[] = [
       'Strong understanding of HTML5, CSS3, and responsive design',
       'Experience with state management libraries (Redux, Context API)',
       'Familiarity with testing frameworks (Jest, React Testing Library)'
-    ]
+    ],
+    applicants: 42
   },
   {
     id: '2',
@@ -106,7 +107,8 @@ export const jobs: Job[] = [
       'Proficiency in design tools (Figma, Sketch, Adobe Creative Suite)',
       'Strong understanding of user-centered design principles',
       'Portfolio demonstrating successful design projects'
-    ]
+    ],
+    applicants: 27
   },
   {
     id: '3',
@@ -119,7 +121,8 @@ export const jobs: Job[] = [
     tags: ['Python', 'Machine Learning', 'SQL', 'TensorFlow', 'Statistics'],
     featured: true,
     postedDate: '3 days ago',
-    experience: '4+ years'
+    experience: '4+ years',
+    applicants: 58
   },
   {
     id: '4',
@@ -132,7 +135,8 @@ export const jobs: Job[] = [
     tags: ['Product Strategy', 'Agile', 'Analytics', 'User Research', 'Roadmapping'],
     featured: true,
     postedDate: '1 week ago',
-    experience: '6+ years'
+    experience: '6+ years',
+    applicants: 31
   },
   {
     id: '5',
@@ -145,7 +149,8 @@ export const jobs: Job[] = [
     tags: ['AWS', 'Docker', 'Kubernetes', 'Terraform', 'CI/CD'],
     featured: true,
     postedDate: '4 days ago',
-    experience: '4+ years'
+    experience: '4+ years',
+    applicants: 19
   },
   {
     id: '6',
@@ -158,7 +163,8 @@ export const jobs: Job[] = [
     tags: ['Digital Marketing', 'SEO', 'SEM', 'Analytics', 'Content Strategy'],
     featured: true,
     postedDate: '5 days ago',
-    experience: '3+ years'
+    experience: '3+ years',
+    applicants: 24
   }
 ];
 
