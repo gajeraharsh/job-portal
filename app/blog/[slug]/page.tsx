@@ -6,8 +6,9 @@ import Footer from '@/components/Footer';
 import { blogPosts } from '@/lib/blog';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Calendar, User, Share2, Facebook, Linkedin, Twitter, MessageCircle } from 'lucide-react';
+import { Calendar, User } from 'lucide-react';
 import AdBanner from '@/components/AdBanner';
+import SocialShare from '@/components/SocialShare';
 
 interface Params { slug: string }
 
@@ -15,7 +16,6 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const post = blogPosts.find((p) => p.slug === params.slug);
   if (!post) return { title: 'Post not found' };
   const description = post.excerpt.slice(0, 155);
-  const url = `https://example.com/blog/${post.slug}`;
   return {
     title: post.title,
     description,
@@ -24,7 +24,6 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
       description,
       type: 'article',
       images: [{ url: post.image }],
-      url,
     },
     twitter: {
       card: 'summary_large_image',
@@ -38,10 +37,6 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 export default function BlogPostPage({ params }: { params: Params }) {
   const post = blogPosts.find((p) => p.slug === params.slug);
   if (!post) return notFound();
-
-  const pageUrl = typeof window === 'undefined' ? '' : window.location.href;
-  const encodedUrl = encodeURIComponent(pageUrl || `https://example.com/blog/${post.slug}`);
-  const encodedTitle = encodeURIComponent(post.title);
 
   return (
     <div className="min-h-screen bg-white">
