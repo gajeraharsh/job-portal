@@ -1,21 +1,23 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import Link from 'next/link';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { 
-  MapPin, 
-  Calendar, 
-  DollarSign, 
-  Users, 
-  Clock, 
-  Building2, 
+import {
+  MapPin,
+  Calendar,
+  DollarSign,
+  Users,
+  Clock,
+  Building2,
   ExternalLink,
-  Bookmark,
-  Share2
+  Bookmark
 } from 'lucide-react';
+import SocialShare from '@/components/SocialShare';
+import { companies } from '@/lib/data';
 import type { Job } from '@/lib/types';
 
 interface JobModalProps {
@@ -26,27 +28,14 @@ interface JobModalProps {
 export default function JobModal({ job, onClose }: JobModalProps) {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
+  const company = useMemo(() => companies.find((c) => c.name === job.company), [job.company]);
+
   const handleApply = () => {
-    // In a real app, this would handle the application process
     alert(`Applied to ${job.title} at ${job.company}!`);
   };
 
   const handleBookmark = () => {
     setIsBookmarked(!isBookmarked);
-  };
-
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: `${job.title} at ${job.company}`,
-        text: job.description,
-        url: window.location.href,
-      });
-    } else {
-      // Fallback: copy to clipboard
-      navigator.clipboard.writeText(window.location.href);
-      alert('Job link copied to clipboard!');
-    }
   };
 
   return (
@@ -81,9 +70,7 @@ export default function JobModal({ job, onClose }: JobModalProps) {
               >
                 <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-current text-blue-600' : ''}`} />
               </Button>
-              <Button variant="outline" size="sm" onClick={handleShare}>
-                <Share2 className="w-4 h-4" />
-              </Button>
+              <SocialShare title={`${job.title} at ${job.company}`} />
             </div>
           </div>
         </DialogHeader>
@@ -104,7 +91,7 @@ export default function JobModal({ job, onClose }: JobModalProps) {
                   </CardContent>
                 </Card>
               )}
-              
+
               <Card>
                 <CardContent className="p-4 flex items-center gap-3">
                   <Calendar className="w-5 h-5 text-blue-600" />
@@ -146,7 +133,7 @@ export default function JobModal({ job, onClose }: JobModalProps) {
                   <p className="text-gray-700 leading-relaxed mb-4">
                     {job.description}
                   </p>
-                  
+
                   <h4 className="font-semibold text-gray-900 mt-6 mb-3">Key Responsibilities:</h4>
                   <ul className="list-disc pl-5 space-y-2 text-gray-700">
                     {job.responsibilities?.map((resp, index) => (
@@ -196,7 +183,7 @@ export default function JobModal({ job, onClose }: JobModalProps) {
             {/* Apply Button */}
             <Card>
               <CardContent className="p-6">
-                <Button 
+                <Button
                   onClick={handleApply}
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12 text-lg font-semibold"
                 >
@@ -218,16 +205,24 @@ export default function JobModal({ job, onClose }: JobModalProps) {
                   </div>
                   <div>
                     <div className="font-semibold">{job.company}</div>
-                    <div className="text-sm text-gray-500">Technology Company</div>
+                    {company?.industry && (
+                      <div className="text-sm text-gray-500">{company.industry}</div>
+                    )}
+                    {company?.size && (
+                      <div className="text-xs text-gray-500">Size: {company.size}</div>
+                    )}
                   </div>
                 </div>
-                <p className="text-sm text-gray-700 mb-4">
-                  Leading technology company focused on innovation and delivering 
-                  exceptional products that make a difference in people's lives.
-                </p>
-                <Button variant="outline" className="w-full">
-                  View Company Profile
-                  <ExternalLink className="ml-2 w-4 h-4" />
+                {company?.website && (
+                  <p className="text-sm text-gray-700 mb-4 break-words">
+                    Website: <a href={company.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{company.website}</a>
+                  </p>
+                )}
+                <Button asChild variant="outline" className="w-full">
+                  <Link href={company ? `/companies/${company.id}` : '/companies'}>
+                    View Company Profile
+                    <ExternalLink className="ml-2 w-4 h-4" />
+                  </Link>
                 </Button>
               </CardContent>
             </Card>
