@@ -14,6 +14,10 @@ import JobModal from '@/components/JobModal';
 import { companies, jobs } from '@/lib/data';
 import type { Job } from '@/lib/types';
 
+export function generateStaticParams() {
+  return companies.map((c) => ({ id: c.id }));
+}
+
 export default function CompanyProfilePage() {
   const params = useParams<{ id: string }>();
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
