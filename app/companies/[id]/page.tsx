@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import SocialShare from '@/components/SocialShare';
+import JobModal from '@/components/JobModal';
 import { companies, jobs } from '@/lib/data';
 import type { Job } from '@/lib/types';
 
@@ -139,6 +140,10 @@ export default function CompanyProfilePage() {
       </div>
 
       <Footer />
+
+      {selectedJob && (
+        <JobModal job={selectedJob} onClose={() => setSelectedJob(null)} />
+      )}
     </div>
   );
 }
