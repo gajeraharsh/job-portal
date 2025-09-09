@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import Link from 'next/link';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -14,8 +15,9 @@ import {
   Building2,
   ExternalLink,
   Bookmark,
-  Share2,
 } from 'lucide-react';
+import SocialShare from '@/components/SocialShare';
+import { companies } from '@/lib/data';
 import type { Job } from '@/lib/types';
 
 interface JobSheetProps {
@@ -26,24 +28,13 @@ interface JobSheetProps {
 export default function JobSheet({ job, onClose }: JobSheetProps) {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
+  const company = useMemo(() => companies.find((c) => c.name === job.company), [job.company]);
+
   const handleApply = () => {
     alert(`Applied to ${job.title} at ${job.company}!`);
   };
 
   const handleBookmark = () => setIsBookmarked(!isBookmarked);
-
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: `${job.title} at ${job.company}`,
-        text: job.description,
-        url: window.location.href,
-      });
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert('Job link copied to clipboard!');
-    }
-  };
 
   return (
     <Sheet open onOpenChange={onClose}>
@@ -76,9 +67,7 @@ export default function JobSheet({ job, onClose }: JobSheetProps) {
               >
                 <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-current text-blue-600' : ''}`} />
               </Button>
-              <Button variant="outline" size="sm" onClick={handleShare}>
-                <Share2 className="w-4 h-4" />
-              </Button>
+              <SocialShare title={`${job.title} at ${job.company}`} />
             </div>
           </div>
         </SheetHeader>
@@ -206,15 +195,24 @@ export default function JobSheet({ job, onClose }: JobSheetProps) {
                   </div>
                   <div>
                     <div className="font-semibold">{job.company}</div>
-                    <div className="text-sm text-gray-500">Technology Company</div>
+                    {company?.industry && (
+                      <div className="text-sm text-gray-500">{company.industry}</div>
+                    )}
+                    {company?.size && (
+                      <div className="text-xs text-gray-500">Size: {company.size}</div>
+                    )}
                   </div>
                 </div>
-                <p className="text-sm text-gray-700 mb-4">
-                  Leading technology company focused on innovation and delivering exceptional products that make a difference in people's lives.
-                </p>
-                <Button variant="outline" className="w-full">
-                  View Company Profile
-                  <ExternalLink className="ml-2 w-4 h-4" />
+                {company?.website && (
+                  <p className="text-sm text-gray-700 mb-4 break-words">
+                    Website: <a href={company.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{company.website}</a>
+                  </p>
+                )}
+                <Button asChild variant="outline" className="w-full">
+                  <Link href={company ? `/companies/${company.id}` : '/companies'}>
+                    View Company Profile
+                    <ExternalLink className="ml-2 w-4 h-4" />
+                  </Link>
                 </Button>
               </CardContent>
             </Card>
