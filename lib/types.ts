@@ -12,6 +12,7 @@ export interface Job {
   experience?: string;
   responsibilities?: string[];
   requirements?: string[];
+  applicants?: number;
 }
 
 export interface Company {

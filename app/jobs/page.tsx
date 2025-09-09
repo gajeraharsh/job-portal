@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import JobModal from '@/components/JobModal';
+import JobSheet from '@/components/JobSheet';
 import { jobs } from '@/lib/data';
 import type { Job } from '@/lib/types';
 
@@ -179,7 +179,7 @@ export default function JobsPage() {
       <Footer />
       
       {selectedJob && (
-        <JobModal job={selectedJob} onClose={() => setSelectedJob(null)} />
+        <JobSheet job={selectedJob} onClose={() => setSelectedJob(null)} />
       )}
     </div>
   );
